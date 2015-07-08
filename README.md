@@ -65,3 +65,6 @@ To generate an in-directory PDF of a specific module, run:
 sh scripts/generate-module.sh
 ``
 and pass in the directory name of the module.
+
+#Contributing
+Please submit a pull request when making contributions. Thank you.
