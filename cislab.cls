@@ -90,4 +90,5 @@
 % partial.
 \newcommand{\includemodule}[1]{
     \input{modules/#1/partial}
+    \newpage
 }
