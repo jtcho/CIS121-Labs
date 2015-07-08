@@ -31,6 +31,7 @@
 \RequirePackage{algorithm, algorithmicx, algpseudocode}
 \RequirePackage{hyperref}
 \RequirePackage{framed, graphics, placeins, caption}
+\RequirePackage{tikz}
 
 % Uniform font loading.
 \RequirePackage{fontspec}
