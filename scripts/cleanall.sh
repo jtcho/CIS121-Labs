@@ -12,6 +12,8 @@ then
     find . -name "*.out" -type f -delete
     find . -name "*.pyg" -type f -delete
     find . ! -path "./dist/*" -name "*.pdf" -type f -delete
+    find . -name "*.synctex.gz" -type f -delete
+    find . -name "*.synctex.gz(busy)" -type f -delete
 else
     echo "Aborting."
 fi

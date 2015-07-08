@@ -20,6 +20,24 @@ to compile your TeX file as a PDF.
 
 **You must use XeLaTeX and the shell-escape flag.**
 
+##Command-Line Editing
+Navigate to a module's directory (e.g. `lab01/`) and edit the `partial.tex` file using your favorite text editor.
+
+For a quick preview you can run XeLaTeX directly on the `full.tex` file or run the `generate-module` script.
+
+##TeXShop (OSX)
+If you want to use TeXShop to edit your modules TeX (with fancy preview), you'll need to modify the default XeLaTeX command.
+
+Edit the file `~/Library/TeXShop/Engines/XeLaTeX.engine` with your favorite text-editor.
+
+Change the line reading `xelatex [...] "$1"` by adding the flag for `--shell-escape`.
+
+``xelatex [...] --shell-escape "$1"``
+
+Now compile the module's `full.tex` file using XeLaTeX. Voila!
+
+*Note: You should edit the `partial.tex` file and preview the `full.tex` output.*
+
 #Scripts
 Various utility scripts are provided for convenience.
 
