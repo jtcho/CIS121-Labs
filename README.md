@@ -1,6 +1,8 @@
 CIS121 Lab Handouts
 ===================
 
+Repository for storing and updating lab (recitation) materials for [CIS121: Data Structures and Algorithms With Java](https://www.seas.upenn.edu/~cis121) at the University of Pennsylvania.
+
 #Setup
 Install TeX Live onto your machine. For OSX, install MacTeX. Make sure that you have command-line access set up.
 

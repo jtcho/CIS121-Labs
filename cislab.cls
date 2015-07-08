@@ -1,6 +1,9 @@
 
 % cislab.cls
 % ----------
+% Custom LaTeX class file template for all lab-related
+% material.
+% 
 % Author: JT Cho (jonathan.t.cho@gmail.com)
 % Painstakingly written by hand because web editors
 % are for chumps.
@@ -8,7 +11,13 @@
 % Documents must be compiled using:
 %   xelatex --shell-escape [filename].tex
 
-% Extends the `article` class.
+% Introduces various new commands for convenience:
+% See command definition for documentation.
+% \Mod
+% \ceil
+% \floor
+% \labtitle
+% \includemodule
 
 \ProvidesClass{cis121}[2015/07/07 Data Structures and Algorithms]
 % Require XeLaTeX for Minted package.
