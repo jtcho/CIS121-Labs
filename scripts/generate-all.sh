@@ -8,15 +8,24 @@ then
     exit 0
 fi
 
-printf "Generating all PDFs...\n"
-#xelatex --shell-escape compendium.tex
-rm_extensions=(.out .aux .log .pyg)
-for ext in "${rm_extensions[@]}"; do
-    if [[ -f compendium$ext ]]
-    then
-        rm compendium$ext
-    fi
-done
+printf "Generating \e[32mcompendium\e[36m PDF.\n"
+xelatex --shell-escape compendium.tex > /dev/null
+
+if [[ ! -f compendium.pdf ]]
+then
+    printf "\e[31m[ERROR]\e[36m Encountered error generating \e[32mcompendium\e[36m PDF. See log for details.\n"
+else
+    echo "Cleaning..."
+    mv compendium.pdf dist/
+    rm_extensions=(.out .aux .log .pyg)
+    for ext in "${rm_extensions[@]}"; do
+        if [[ -f compendium$ext ]]
+        then
+            rm compendium$ext
+        fi
+    done
+fi
+
 
 # Allow handling of empty modules directory.
 shopt -s extglob nullglob
@@ -26,14 +35,14 @@ for module in "${modules[@]}"; do
     module_name=${module:8:${#module}-8}
     if [[ ! -f modules/$module_name/partial.tex ]]
     then
-        printf "\e[31m[WARNING]\e[36m Module \`$module_name\` is missing a partial.tex file. Skipping...\n"
+        printf "\e[31m[WARNING]\e[36m Module \e[32m$module_name\e[36m is missing a partial.tex file. Skipping...\n"
     else
         printf "Generating \e[32m$module_name\e[36m as a standalone PDF.\n"
         sed -e "s;%MODULE%;$module_name;g" module_template > $module_name.tex
         xelatex --shell-escape $module_name.tex >/dev/null
         if [[ ! -f $module_name.pdf ]]
         then
-            printf "\e[31m[ERROR]\e[36m Encountered error generating PDF for $module_name. See log for details.\n"
+            printf "\e[31m[ERROR]\e[36m Encountered error generating PDF for \e[32m$module_name\e[36m. See log for details.\n"
         else
             mv $module_name.pdf dist/
             echo "Cleaning..."
