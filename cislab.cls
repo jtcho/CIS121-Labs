@@ -10,7 +10,7 @@
 
 % Extends the `article` class.
 
-\ProvidesClass{CIS121}[2015/07/07 Data Structures and Algorithms]
+\ProvidesClass{cis121}[2015/07/07 Data Structures and Algorithms]
 % Require XeLaTeX for Minted package.
 \NeedsTeXFormat{LaTeX2e}
 
@@ -56,22 +56,6 @@
 \definecolor{bg}{rgb}{0.9804,0.98,0.90196}
 \renewcommand{\theFancyVerbLine}{
     \sffamily\textcolor[rgb]{0.5,0.5,0.5}{\scriptsize\arabic{FancyVerbLine}}}
-
-% Large, Fancy Title for Front Page
-% Usage: \booktitle
-\newcommand{\booktitle}{
-    \mbox{} % Filler so vspace takes effect.
-    \vspace{220pt}
-    \begin{center}
-    \begin{tikzpicture}
-    \node[align=center,draw,thick,minimum width=\textwidth,inner sep=6mm] (titlebox)%
-    {\textsc{\large Data Structures and Algorithms with Java}\\[\baselineskip]\textbf{\huge Recitation Notes Compendium}};
-    \node[fill=white] (CIS121) at (titlebox.north) {\bfseries \Huge CIS 121};
-    \node (feat) at ([yshift=9mm]titlebox.north) {\textsc{\Large Fall 2015}};
-    \end{tikzpicture}
-    \end{center}
-    \newpage
-}
 
 % Recitation Title
 % Usage: \labtitle{[season] [yyyy]}{[lab_no]}{[days]}
