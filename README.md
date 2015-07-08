@@ -11,7 +11,7 @@ Install TeX Live onto your machine. For OSX, install MacTeX. Make sure that you 
 Use the command:
 
 ``
-xelatex --shell-escape [filename].tex
+xelatex --shell-escape <filename>.tex
 ``
 
 to compile your TeX file as a PDF.
