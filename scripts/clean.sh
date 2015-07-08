@@ -1,7 +1,7 @@
 
 # -n flag accepts one character without the need
 # to press `Enter`
-printf "\e[36m This will remove all of the auxiliary files that LaTex generates when compiling pdfs. Are you sure you want to delete them? [y/n]\n"
+printf "\e[31m[WARNING]\e[36m This will remove all of the auxiliary files that LaTex generates when compiling pdfs. Are you sure you want to delete them? \e[33m[y/n]\e[36m\n"
 read -p "> " -n 1 -r
 printf "\n\n"
 if [[ $REPLY =~ ^[Yy]$ ]]

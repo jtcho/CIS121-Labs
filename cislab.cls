@@ -79,3 +79,8 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 % Usage: \floor{x/2}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+%
+\newcommand{\includemodule}[1]{
+    \input{modules/#1/partial}
+}
