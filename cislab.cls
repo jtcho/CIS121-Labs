@@ -80,7 +80,8 @@
 % Usage: \floor{x/2}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-%
+% Shorthand command for including a specific module
+% partial.
 \newcommand{\includemodule}[1]{
     \input{modules/#1/partial}
 }
