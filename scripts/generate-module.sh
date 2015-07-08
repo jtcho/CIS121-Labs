@@ -5,6 +5,8 @@ printf "\n"
 if [[ -d modules/$REPLY ]]
 then
     MODULE_NAME=$REPLY
+    
+    rm_extensions=(.out .aux .log .pyg)
 
     if [[ ! -f modules/$MODULE_NAME/partial.tex ]]
     then
@@ -27,8 +29,18 @@ then
     echo "Generating \`$MODULE_NAME\` as a standalone PDF."
     sed -e "s;%MODULE%;$MODULE_NAME;g" module_template > $MODULE_NAME.tex
     xelatex --shell-escape $MODULE_NAME.tex
-    echo "Cleaning up..."
+
+    for ext in "${rm_extensions[@]}"; do
+        if [[ -f $MODULE_NAME$ext ]]
+        then
+            mv $MODULE_NAME$ext logs/
+        fi
+    done
+
     rm $MODULE_NAME.tex
+    mv $MODULE_NAME.pdf dist/
+
+    printf "\nAll finished! Check your \e[33mdist\e[36m folder for the output PDF. The output log and misc. files can be found in the \e[33mlogs\e[36m directory.\n"
 else
     echo "This module does not exist! Check your modules folder."
 fi

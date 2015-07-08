@@ -8,22 +8,35 @@ then
     exit 0
 fi
 
-printf "Generating \e[32mcompendium\e[36m PDF.\n"
+#
+if [[ ! -d dist ]]
+then
+    mkdir dist
+fi
+if [[ ! -d logs ]]
+then
+    mkdir logs
+fi
+
+rm_extensions=(.out .aux .log .pyg)
+
+printf "Generating \e[32mcompendium\e[36m PDF."
 xelatex --shell-escape compendium.tex > /dev/null
+printf "."
 
 if [[ ! -f compendium.pdf ]]
 then
-    printf "\e[31m[ERROR]\e[36m Encountered error generating \e[32mcompendium\e[36m PDF. See log for details.\n"
+    printf "...\e[31m[ERROR]\e[36m \n"
 else
-    echo "Cleaning..."
     mv compendium.pdf dist/
-    rm_extensions=(.out .aux .log .pyg)
     for ext in "${rm_extensions[@]}"; do
+        printf "."
         if [[ -f compendium$ext ]]
         then
-            rm compendium$ext
+            mv compendium$ext logs/
         fi
     done
+    printf "Done!\n"
 fi
 
 
@@ -37,26 +50,29 @@ for module in "${modules[@]}"; do
     then
         printf "\e[31m[WARNING]\e[36m Module \e[32m$module_name\e[36m is missing a partial.tex file. Skipping...\n"
     else
-        printf "Generating \e[32m$module_name\e[36m as a standalone PDF.\n"
+        printf "Generating \e[32m$module_name\e[36m as a standalone PDF."
         sed -e "s;%MODULE%;$module_name;g" module_template > $module_name.tex
+        printf "."
         xelatex --shell-escape $module_name.tex >/dev/null
+        printf "."
         if [[ ! -f $module_name.pdf ]]
         then
-            printf "\e[31m[ERROR]\e[36m Encountered error generating PDF for \e[32m$module_name\e[36m. See log for details.\n"
+            printf "\e[31m[ERROR]\e[36m\n"
         else
             mv $module_name.pdf dist/
-            echo "Cleaning..."
             rm $module_name.tex
             for ext in "${rm_extensions[@]}"; do
+                printf "."
                 if [[ -f $module_name$ext ]]
                 then
-                    rm $module_name$ext
+                    mv $module_name$ext logs/
                 fi
             done
+            printf "Done!\n"
         fi
     fi
 done
 
-printf "Done! Check your \e[33mdist\e[36m folder for the outputted PDFs. If there were any errors, try generating the file individually.\n"
+printf "\nAll finished! Check your \e[33mdist\e[36m folder for the outputted PDFs. All output logs and miscellaneous files can be found in the \e[33mlogs\e[36m directory.\n"
 
 printf "\e[0m"
