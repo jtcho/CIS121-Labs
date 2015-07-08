@@ -32,6 +32,7 @@
 \RequirePackage{hyperref}
 \RequirePackage{framed, graphics, placeins, caption}
 \RequirePackage{tikz}
+\RequirePackage{titlesec}
 
 % Uniform font loading.
 \RequirePackage{fontspec}
@@ -56,6 +57,11 @@
 \definecolor{bg}{rgb}{0.9804,0.98,0.90196}
 \renewcommand{\theFancyVerbLine}{
     \sffamily\textcolor[rgb]{0.5,0.5,0.5}{\scriptsize\arabic{FancyVerbLine}}}
+
+% Sections will have a hrule (horizontal underline) spanning
+% the text-width underneath them.
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.6pt]}]
+
 
 % Recitation Title
 % Usage: \labtitle{[season] [yyyy]}{[lab_no]}{[days]}
