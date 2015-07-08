@@ -25,7 +25,7 @@ then
         fi
     fi
     echo "Generating \`$MODULE_NAME\` as a standalone PDF."
-    sed -e "s;%MODULE%;$MODULE_NAME;g" full_template > $MODULE_NAME.tex
+    sed -e "s;%MODULE%;$MODULE_NAME;g" module_template > $MODULE_NAME.tex
     xelatex --shell-escape $MODULE_NAME.tex
     echo "Cleaning up..."
     rm $MODULE_NAME.tex
