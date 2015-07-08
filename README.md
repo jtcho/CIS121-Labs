@@ -59,12 +59,21 @@ Note that the `cleanall` script does not remove PDFs from the `dist/` folder.
 ##Module Generation
 The project hierarchy is as follows. Individual modules (for each lab) are given their own folder inside `./modules`. Each module has a `partial.tex` file which is **required**.
 
-To generate an in-directory PDF of a specific module, run:
+To generate an in-directory PDF of a specific module, run the following command from the top-directory:
 
 ``
 sh scripts/generate-module.sh
 ``
 and pass in the directory name of the module.
+
+##Generate All
+To generate all modules as individual PDFs in the `dist/` directory, run:
+
+``
+sh scripts/generate-all.sh
+``
+
+This script will override files and can be unsafe, so be careful. Also, it is not very useful in debugging individual TeX compilation errors. You will have to individually compile files to do so.
 
 #Contributing
 Please submit a pull request when making contributions. Thank you.

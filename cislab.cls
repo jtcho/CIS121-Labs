@@ -78,7 +78,7 @@
     \framebox{\framebox{
         \begin{minipage}[t]{0.9\columnwidth}
             \begin{center}
-                \large\textbf{CIS 121 --- Data Structures and Algorithms with Java - #1}
+                \large\textbf{CIS 121---Data Structures and Algorithms with Java - #1}
             \par
             \end{center}
         \end{minipage}
