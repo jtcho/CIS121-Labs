@@ -6,7 +6,7 @@
 % are for chumps.
 
 % Documents must be compiled using:
-%   xelatex --shell-escape=file *.tex
+%   xelatex --shell-escape [filename].tex
 
 % Extends the `article` class.
 
