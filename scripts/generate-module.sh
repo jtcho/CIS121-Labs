@@ -2,9 +2,16 @@
 printf "\e[36m What lab module would you like to generate?\n"
 read -p "> " -e -r
 printf "\n"
-if [[ -f modules/$REPLY/full.tex ]]
+if [[ -d modules/$REPLY ]]
 then
     MODULE_NAME=$REPLY
+
+    if [[ ! -f modules/$MODULE_NAME/partial.tex ]]
+    then
+        printf "\e[31m[WARNING]\e[36m A malformed module directory was provided. Missing \e[31mpartial.tex\e[0m.\n"
+        exit 0
+    fi
+
     if [[ -f $MODULE_NAME.tex || -f $MODULE_NAME.pdf ]]
     then
         printf "\e[31m[WARNING]\e[36m By running this script you will override existing files. Are you sure you want to continue? \e[33m[y/n]\e[36m\n"
