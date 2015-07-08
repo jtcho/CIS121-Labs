@@ -50,7 +50,7 @@ for module in "${modules[@]}"; do
             for ext in "${rm_extensions[@]}"; do
                 if [[ -f $module_name$ext ]]
                 then
-                rm $module_name$ext
+                    rm $module_name$ext
                 fi
             done
         fi
