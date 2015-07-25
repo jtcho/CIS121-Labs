@@ -75,5 +75,15 @@ sh scripts/generate-all.sh
 
 This script will override files and can be unsafe, so be careful. Also, it is not very useful in debugging individual TeX compilation errors. You will have to individually compile files to do so.
 
+#Miscellaneous
+
+##Images
+If when adding PNG type images to a .tex file, you get an error on compilation:
+``
+libpng warning: iCCP: known incorrect sRGB profile
+``
+
+, then you can run the `strip-images` script in the `scripts` directory to fix the images.
+
 #Contributing
 Please submit a pull request when making contributions. Thank you.
