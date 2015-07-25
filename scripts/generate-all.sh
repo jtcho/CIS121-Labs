@@ -1,10 +1,17 @@
+#!/bin/bash
 
-printf "\e[31m[WARNING]\e[36m This script generates all modules located inside the \e[32mmodule\e[36m folder as individual PDF files. It will override any files in this directory that have the same name, as well as override files in the \e[32mdist\e[36m directory. Do you want to continue? \e[33m[y/n]\e[36m\n"
+ERR_COL="\e[31m"
+MSG_COL="\e[36m"
+MIS_COL="\e[33m"
+CON_COL="\e[32m"
+RES_COL="\e[0m"
+
+printf "${ERR_COL}[WARNING]${MSG_COL} This script generates all modules located inside the ${MIS_COL}module${MSG_COL} folder as individual PDF files. It will override any files in this directory that have the same name, as well as override files in the ${MIS_COL}dist${MSG_COL} directory. Do you want to continue? ${CON_COL}[y/n]${MSG_COL}\n"
 read -p "> " -n 1 -r
 printf "\n\n"
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-    printf "Aborting...\n\e[0m"
+    printf "Aborting...\n${RES_COL}"
     exit 0
 fi
 
@@ -20,13 +27,13 @@ fi
 
 rm_extensions=(.out .aux .log .pyg)
 
-printf "Generating \e[32mcompendium\e[36m PDF."
+printf "Generating ${MIS_COL}compendium${MSG_COL} PDF."
 xelatex --shell-escape compendium.tex > /dev/null
 printf "."
 
 if [[ ! -f compendium.pdf ]]
 then
-    printf "...\e[31m[ERROR]\e[36m \n"
+    printf "...${ERR_COL}[ERROR]${MSG_COL} \n"
 else
     mv compendium.pdf dist/
     for ext in "${rm_extensions[@]}"; do
@@ -48,16 +55,16 @@ for module in "${modules[@]}"; do
     module_name=${module:8:${#module}-8}
     if [[ ! -f modules/$module_name/partial.tex ]]
     then
-        printf "\e[31m[WARNING]\e[36m Module \e[32m$module_name\e[36m is missing a partial.tex file. Skipping...\n"
+        printf "${ERR_COL}[WARNING]${MSG_COL} Module ${MIS_COL}$module_name${MSG_COL} is missing a partial.tex file. Skipping...\n"
     else
-        printf "Generating \e[32m$module_name\e[36m as a standalone PDF."
+        printf "Generating ${MIS_COL}$module_name${MSG_COL} as a standalone PDF."
         sed -e "s;%MODULE%;$module_name;g" module_template > $module_name.tex
         printf "."
         xelatex --shell-escape $module_name.tex >/dev/null
         printf "."
         if [[ ! -f $module_name.pdf ]]
         then
-            printf "\e[31m[ERROR]\e[36m\n"
+            printf "${ERR_COL}[ERROR]${MSG_COL}\n"
         else
             mv $module_name.pdf dist/
             rm $module_name.tex
@@ -79,6 +86,6 @@ for module in "${modules[@]}"; do
     fi
 done
 
-printf "\nAll finished! Check your \e[33mdist\e[36m folder for the outputted PDFs. All output logs and miscellaneous files can be found in the \e[33mlogs\e[36m directory.\n"
+printf "\nAll finished! Check your ${MIS_COL}dist${MSG_COL} folder for the outputted PDFs. All output logs and miscellaneous files can be found in the ${MIS_COL}logs${MSG_COL} directory.\n"
 
-printf "\e[0m"
+printf "${RES_COL}"

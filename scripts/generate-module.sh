@@ -1,7 +1,42 @@
+#!/bin/bash
 
-printf "\e[36m What lab module would you like to generate?\n"
+ERR_COL="\e[31m"
+MSG_COL="\e[36m"
+MIS_COL="\e[32m"
+CON_COL="\e[33m"
+RES_COL="\e[0m"
+
+# Needs testing on a Linux machine. OSX appears
+# not to run fine even if the script is invoked
+# via `sh`.
+if [ ! "$BASH_VERSION" ] ; then
+    printf "${ERR_COL}[Error] ${MSG_COL}Please do not use sh or some other shell to run this script ($0), execute it directly!\n${RES_COL}" 1>&2
+    exit 1
+fi
+
+if ! hash xelatex 2>/dev/null; then
+    printf "${ERR_COL}[Error] ${MSG_COL}You do not appear to have XeLaTeX installed and in your path. Have you installed TeX Live?\n${RES_COL}"
+    exit 1
+fi
+
+# Nifty way of getting directory of script.
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Jump to `modules` directory for tab 
+# autocompletion.
+pushd $DIR/../modules
+
+printf "${MSG_COL}What lab module would you like to generate?\n"
 read -p "> " -e -r
 printf "\n"
+
+# Return to original directory.
+popd
+
+# Because we allow autocomplete of directories,
+# we need to trim off any '/' characters.
+REPLY="${REPLY//\/}"
+
 if [[ -d modules/$REPLY ]]
 then
     MODULE_NAME=$REPLY
@@ -10,19 +45,19 @@ then
 
     if [[ ! -f modules/$MODULE_NAME/partial.tex ]]
     then
-        printf "\e[31m[WARNING]\e[36m A malformed module directory was provided. Missing \e[31mpartial.tex\e[0m.\n"
+        printf "${ERR_COL}[WARNING]${MSG_COL} A malformed module directory was provided. Missing ${MIS_COL}mpartial.tex${RES_COL}.\n"
         exit 0
     fi
 
     if [[ -f $MODULE_NAME.tex || -f $MODULE_NAME.pdf ]]
     then
-        printf "\e[31m[WARNING]\e[36m By running this script you will override existing files. Are you sure you want to continue? \e[33m[y/n]\e[36m\n"
+        printf "${ERR_COL}[WARNING]${MSG_COL} By running this script you will override existing files. Are you sure you want to continue? ${CON_COL}[y/n]${MSG_COL}\n"
         read -p "> " -n 1 -r
         printf "\n\n"
         if [[ ! $REPLY =~ ^[Yy]$ ]]
         then
             echo "Aborting."
-            printf "\e[0m"
+            printf "${RES_COL}"
             exit 0
         fi
     fi
@@ -42,9 +77,9 @@ then
     rm -f modules/$MODULE_NAME/*.aux
     mv $MODULE_NAME.pdf dist/
 
-    printf "\nAll finished! Check your \e[33mdist\e[36m folder for the output PDF. The output log and misc. files can be found in the \e[33mlogs\e[36m directory.\n"
+    printf "\nAll finished! Check your ${MIS_COL}mdist${MSG_COL} folder for the output PDF. The output log and misc. files can be found in the ${MIS_COL}logs${MSG_COL} directory.\n"
 else
     echo "This module does not exist! Check your modules folder."
 fi
-printf "\e[0m"
+printf "${RES_COL}"
 
