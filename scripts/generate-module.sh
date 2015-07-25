@@ -7,7 +7,7 @@ CON_COL="\e[33m"
 RES_COL="\e[0m"
 
 # Needs testing on a Linux machine. OSX appears
-# not to run fine even if the script is invoked
+# to run fine even if the script is invoked
 # via `sh`.
 if [ ! "$BASH_VERSION" ] ; then
     printf "${ERR_COL}[Error] ${MSG_COL}Please do not use sh or some other shell to run this script ($0), execute it directly!\n${RES_COL}" 1>&2
