@@ -62,11 +62,16 @@ for module in "${modules[@]}"; do
             mv $module_name.pdf dist/
             rm $module_name.tex
             rm -f $module_name.listing
+            rm -f modules/$module_name/*.aux
             for ext in "${rm_extensions[@]}"; do
                 printf "."
                 if [[ -f $module_name$ext ]]
                 then
                     mv $module_name$ext logs/
+                fi
+                if [[ -f modules/$module_name/$module_name$ext ]]
+                then
+                    mv modules/$module_name/$module_name$ext logs/
                 fi
             done
             printf "Done!\n"

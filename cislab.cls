@@ -30,6 +30,15 @@
 % Execute options processing.
 \ProcessOptions \relax
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%     VARIABLES     %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+
+\newcommand{\semester}{Fall 2015}
+
+\makeatother
+
 % Inherit from article.
 \LoadClass{article}
 
