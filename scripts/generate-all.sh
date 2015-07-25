@@ -61,6 +61,7 @@ for module in "${modules[@]}"; do
         else
             mv $module_name.pdf dist/
             rm $module_name.tex
+            rm -f $module_name.listing
             for ext in "${rm_extensions[@]}"; do
                 printf "."
                 if [[ -f $module_name$ext ]]

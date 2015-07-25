@@ -42,6 +42,8 @@
 \RequirePackage{framed, graphics, placeins, caption}
 \RequirePackage{tikz}
 \RequirePackage{titlesec}
+\RequirePackage[skins]{tcolorbox}
+\tcbuselibrary{minted}
 
 % Uniform font loading.
 \RequirePackage{fontspec}
@@ -100,4 +102,51 @@
 \newcommand{\includemodule}[1]{
     \input{modules/#1/partial}
     \newpage
+}
+
+% Shorthand environment for code block.
+% Uses the `minted` environment and the tcolorbox
+% package.
+% Usage: \begin{code}{c} %... \end{code}
+%
+% \begin{minted}[ linenos,framesep=5mm,fontsize=\footnotesize,bgcolor=bg,mathescape]{[language]}
+% \end{minted}
+\newtcblisting{code}[1]{
+    listing only,
+    frame hidden,
+    boxrule=0pt,
+    minted options={
+        linenos,
+        framesep=5mm,
+        fontsize=\footnotesize,
+        bgcolor=bg,
+        mathescape
+    },
+    colback=white,
+    colframe=white,
+    minted language=#1
+}
+
+
+% Shorthand environment for Java code block.
+% Uses the `minted` environment and the tcolorbox
+% package.
+% Usage: \begin{java} %... \end{java}
+%
+% \begin{minted}[ linenos,framesep=5mm,fontsize=\footnotesize,bgcolor=bg,mathescape]{java}
+% \end{minted}
+\newtcblisting{java}{
+    listing only,
+    frame hidden,
+    boxrule=0pt,
+    minted options={
+        linenos,
+        framesep=5mm,
+        fontsize=\footnotesize,
+        bgcolor=bg,
+        mathescape
+    },
+    colback=white,
+    colframe=white,
+    minted language=java
 }

@@ -1,51 +1,15 @@
 
 \labtitle{Fall 2015}{1}{Monday, August 31/Tuesday, September 1}
 
-\section*{Introduction}
-\subsection*{Agenda}
-\begin{itemize}
-    \item Self/Student Introductions!
-    \item Brief discussion of course and breadth of its material.
-        \begin{itemize}
-            \item Algorithms
-            \item Data Structures
-            \item Runtime Complexity
-        \end{itemize}
-    \item Where will this course take you?
-        \begin{itemize}
-            \item Interview preparation, jobs
-            \item Smart, informed coding choices and profiling
-            \item Start to doubt the world around you. Beware of black box code!
-            \item Theory-land
-        \end{itemize}
-    \item Course caveats (at least in past semesters):
-        \begin{itemize}
-            \item Lots of math, for Big Oh proofs/statistical analysis later on.
-            \item Java, JUnit (If you don't feel comfortable, please let me know! I will try to help.)
-            \item Less hand-holding.
-            \item Walk the walk! If you don't do the work, you're going to have a hard time.
-        \end{itemize}
-\end{itemize}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\textwidth*5/16]{good_code}
-    \caption*{\underline{\textit{\href{http://xkcd.com/844}{XKCD: 844}}}}
-\end{figure}
+\section*{Problem 1: Unique Character Strings} 
 
-\newpage
-
-\subsection*{Problem 1} 
-
-\textbf{Unique Character Strings:} Given a string of length $n$, determine whether it contains all unique characters - or, whether any characters are used more than once.\\
+\textit{Given a string of length $n$, determine whether it contains all unique characters - or, whether any characters are used more than once.}\\
 
 \textit{Tips:} Guess the lower-bound! What is the limit on the fastest runtime algorithm that anyone can formulate for this problem?\\
 
 \textbf{Naive Solution.} Iterate through each character $c$ in the string $s$. For each such $c$, iterate starting from the next character to the end of the string. If a duplicate character appears, return false. Otherwise, return true.\\
 
-\begin{minted}[ linenos,
-                framesep=5mm,
-                fontsize=\footnotesize,
-                bgcolor=bg]{java}
+\begin{java}
     //naive solution
     boolean hasNoRepeats(String s) {
         for (int i = 0; i < s.length(); i++) {
@@ -57,8 +21,7 @@
         }
         return true;
     }
-\end{minted}
-\mbox{}\\
+\end{java}
 
 \textit{Runtime:} Quadratic.\\
 
@@ -74,10 +37,7 @@ How might you guess that you could improve this runtime? Notice how this algorit
 
 \textit{Runtime:} It depends! How is the set implemented? Is it a black box? If you don't know the runtime of set add/contains, you can't use this result.\\
 
-\begin{minted}[ linenos,
-                framesep=5mm,
-                fontsize=\footnotesize,
-                bgcolor=bg]{c}
+\begin{code}{c}
     // pr0.c
     // Implementation of alternate solution 1.
     // READ IF CURIOUS. NOT COVERED IN COURSE MATERIAL.
@@ -101,13 +61,11 @@ How might you guess that you could improve this runtime? Notice how this algorit
 
         return 1;
     }
-\end{minted}
-\mbox{}\vspace{20pt}
+\end{code}
 
+\section*{Problem 2: Anagram Strings}
 
-\subsection*{Problem 2}
-
-\textbf{Anagram Strings:} Given two strings, determine whether they are anagrams of each other.
+\textit{Given two strings, determine whether they are anagrams of each other.}
 
 \begin{center}
     \texttt{TOMMARVOLORIDDLE} $\longleftrightarrow$ \texttt{IAMLORDVOLDEMORT}\\
@@ -130,8 +88,7 @@ comparing the values of the entries. If for any $i$, $A[i] \neq B[i]$, return fa
 
 \textit{Suggested improvements:} To improve space usage, instead of having two arrays - create one. Each time a character shows up in $s_1$, increment by 1. Each time a character appears in $s_2$, decrement by 1. In the second loop, check for nonzero entries.\\
 
-\begin{minted}[ linenos,framesep=5mm,fontsize=\footnotesize,bgcolor=bg,mathescape]{java}
-    
+\begin{java}
     /**
      * Returns whether two strings are anagrams of each other.
      *
@@ -160,12 +117,10 @@ comparing the values of the entries. If for any $i$, $A[i] \neq B[i]$, return fa
 
         return true;
     }
+\end{java}
+\section*{Problem 3: Dutch National Flag}
 
-\end{minted}
-\mbox{}\vspace{20pt}
-\subsection*{Problem 3}
-
-\textbf{Dutch National Flag: } Given $n$ balls of three colors - say red, white, and blue - arranged randomly in a line, sort them as quickly as possible into contiguous groups of red, white, and blue, with the groups in that order.\\
+\textit{Given $n$ balls of three colors - say red, white, and blue - arranged randomly in a line, sort them as quickly as possible into contiguous groups of red, white, and blue, with the groups in that order.}\\
 
 \begin{figure}[h]
     \centering
@@ -182,8 +137,7 @@ Quicksort can do the sort in average-case linear-logarithmic time and worst-case
 
 \textbf{Linear-time algorithm.} Suppose the array $A$ is given as an input, which contains the initial ordering of the balls. Assume that red balls are represented as $0$'s, white $1$'s, and blue $2$'s. Create an array $B$ of size $3$, where the entries are initialized to $0$. Iterate through $A$. For each occurrence of a colored ball, increment the corresponding entry in $B$. When finished, iterate through $B$. For $i=0$, output $B[0]$ red balls - and so forth.\\
 
-\begin{minted}[ linenos,framesep=5mm,fontsize=\footnotesize,bgcolor=bg,mathescape]{java}
-
+\begin{java}
     //
     int[] dutchNationalFlagSort(int[] A) {
         int B[] = new int[3];
@@ -201,7 +155,24 @@ Quicksort can do the sort in average-case linear-logarithmic time and worst-case
 
         return A;
     }
-\end{minted}
-\mbox{}\vspace{20pt}
+\end{java}
 
-The above is an implementation of \textbf{counting-sort}, which you'll learn later on (probably in 320.)
+The above is an implementation of \textbf{counting-sort}, which you'll learn later on (in CIS 320).
+
+\section*{Problem 4: Row/Column-sorted Matrix Membership}
+\textit{Given an $m$ by $n$ matrix of integers, where each row and each column of the matrix is sorted, determine whether an integer $k$ exists somewhere in the matrix.}
+\begin{itemize}
+    \item How could we do this if we didn't know the rows and columns were sorted?\\
+    
+    \textbf{Solution 1.} If we can not presume anything about the structure of the matrix, we have no choice but to check each element manually! This of course leads to worst case $O(mn)$ time.
+
+    \begin{java}
+        public boolean containsK(int[][] A, int k) {
+
+        }
+    \end{java}
+
+    \item How does knowing the rows and columns are sorted let us do this faster?
+    \item What is our optimal runtime?
+\end{itemize}
+    

@@ -38,6 +38,7 @@ then
     done
 
     rm $MODULE_NAME.tex
+    rm -f $MODULE_NAME.listing
     mv $MODULE_NAME.pdf dist/
 
     printf "\nAll finished! Check your \e[33mdist\e[36m folder for the output PDF. The output log and misc. files can be found in the \e[33mlogs\e[36m directory.\n"
