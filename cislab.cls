@@ -18,6 +18,11 @@
 % \floor
 % \labtitle
 % \includemodule
+%
+% Introduces various new environments for convenience:
+% See environment definition for documentation.
+% `code`
+% `java`
 
 \ProvidesClass{cis121}[2015/07/07 Data Structures and Algorithms]
 % Require XeLaTeX for Minted package.
@@ -114,8 +119,10 @@
 }
 
 % Shorthand environment for code block.
-% Uses the `minted` environment and the tcolorbox
-% package.
+% Uses the `minted` environment to format code.
+% Also uses the `tcolorbox` package because trying
+% to create an alias for a minted environment is
+% very difficult.
 % Usage: \begin{code}{c} %... \end{code}
 %
 % \begin{minted}[ linenos,framesep=5mm,fontsize=\footnotesize,bgcolor=bg,mathescape]{[language]}
@@ -138,7 +145,7 @@
 
 
 % Shorthand environment for Java code block.
-% Uses the `minted` environment and the tcolorbox
+% Uses the `minted` environment and the `tcolorbox`
 % package.
 % Usage: \begin{java} %... \end{java}
 %
