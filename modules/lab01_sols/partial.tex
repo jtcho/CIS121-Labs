@@ -162,17 +162,89 @@ The above is an implementation of \textbf{counting-sort}, which you'll learn lat
 \section*{Problem 4: Row/Column-sorted Matrix Membership}
 \textit{Given an $m$ by $n$ matrix of integers, where each row and each column of the matrix is sorted, determine whether an integer $k$ exists somewhere in the matrix.}
 \begin{itemize}
-    \item How could we do this if we didn't know the rows and columns were sorted?\\
+    \item \textit{How could we do this if we didn't know the rows and columns were sorted?}
     
     \textbf{Solution 1.} If we can not presume anything about the structure of the matrix, we have no choice but to check each element manually! This of course leads to worst case $O(mn)$ time.
 
     \begin{java}
         public boolean containsK(int[][] A, int k) {
-
+            for (int i = 0; i < A.length; i++)
+                for (int j = 0; j < A[0].length; j++)
+                    if (A[i][j] == k)
+                        return true;
+            return false;
         }
     \end{java}
 
-    \item How does knowing the rows and columns are sorted let us do this faster?
-    \item What is our optimal runtime?
+    \item \textit{How does knowing the rows and columns are sorted let us do this faster?}
+
+    If we know that the rows and columns are ordered (suppose in ascending order), this allows us to rule out certain parts of the matrix when searching.
+
+    \textbf{Solution 2.} Compare $k$ to the top-right element of the matrix, $c$. If $k = c$, return true. If $k > c$, then we can rule out the top row because it is sorted and $c$ is its largest element. If $k < c$, then we can rule out the right column, since it is sorted and $c$ is the smallest element. Repeat until either $k$ is found or every row/column is eliminated without reaching the $k=c$ case. Return false.
+
+    \item \textit{What is our optimal runtime?}
+
+    The optimal runtime of the above algorithm is $O(m+n)$. At each iterative step, we eliminate either a row or a column and decreasing the overall problem size. Therefore, the worst case runtime is bounded by the total number of rows and columns.
+
+    \begin{java}
+        /**
+         * Recursive implementation of linear-time search for
+         * an element $k$ in $A$.
+         * @param A - 2D array of integers, the input matrix
+         * Guaranteed to have sorted rows and columns.
+         * @param k - number to search for
+         * @return whether or not $k$ is an element of $A$
+         */
+        public boolean containsK(int[][] A, int k) {
+            return containsKHelper(A, 0, A[0].length-1, k);
+        }
+
+        /**
+         * Recursive helper function for `containsK`.
+         * Receives a 'submatrix' of the original that shrinks
+         * as the algorithm eliminates rows/columns in it search.
+         * @param A - 2D array of integers
+         * @param minRow - the minimum row of the submatrix
+         * @param maxCol - the maximum column of the submatrix
+         * @param k - number to search for
+         * @return whether or not $k$ is an element of $A$
+         */
+        public boolean containsKHelper(int[][] A, int minRow, int maxCol, int k) {
+            // Base case.
+            if (minRow >= A.length || maxCol < 0) {
+                return false;
+            }
+
+            int c = A[minRow][maxCol];
+            if (k == c)
+                return true;
+            else if (k > c)
+                return containsK(A, minRow+1, maxCol, k);
+            else
+                return containsK(A, minRow, maxCol-1, k);
+        }
+    \end{java}
+    
+    \begin{java}
+        /**
+         * Iterative implementation of linear-time search
+         * for an element $k$ in $A$.
+         */
+        public boolean containsK(int[][] A, int k) {
+            int minRow = 0, maxCol = A[0].length-1;
+
+            while (minRow < A.length && maxCol >= 0) {
+                int c = A[minRow][maxCol];
+                if (k == c)
+                    return true;
+                else if (k > c)
+                    minRow++;
+                else
+                    maxCol--;
+            }
+            return false;
+        }
+    \end{java}
+
 \end{itemize}
     
