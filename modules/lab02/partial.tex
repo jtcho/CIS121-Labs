@@ -1,0 +1,39 @@
+
+% Lab 2 Handout
+
+\labtitle{\semester}{2}{TBD}
+
+\section*{Learning Goals}
+During this lab, you will:
+\begin{itemize}
+    \item review Bachmann-Landau notation
+    \item examine certain functions and their relative asymptotic growth rates
+    \item examine the runtime complexity of code
+    \item prove Bachmann-Landau relations
+\end{itemize}
+
+\section*{Big-Oh and Bachmann-Landau Notation}
+
+In class, you have started to discuss Big Oh and other ways of classifying functions and algorithms. These notations belong to what is commonly referred to as the \textit{Bachmann-Landau} family of notations.
+    
+\begin{framed}\relax
+    \begin{center}\relax
+        \underline{Big-Oh Notation}
+    \end{center}
+    \textbf{Definition.} $f(n) = O(g(n))$ if there exist constants $n_0$ and $c > 0$ s.t. $f(i) \leq c g(i)$ for all $i \geq n_0$.
+\end{framed}
+\begin{framed}
+    \begin{center}
+        \underline{Big-Omega Notation}
+    \end{center}
+    \textbf{Definition.} $f(n) = \Omega(g(n))$ if there exist constants $n_0$ and $c > 0$ s.t. $f(i) \geq c g(i)$ for all $i \geq n_0$.
+\end{framed}
+\begin{framed}
+    \begin{center}
+        \underline{Big-Theta Notation}
+    \end{center}
+    \textbf{Definition.} $f(n) = \Theta(g(n))$ if $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$.
+\end{framed}
+
+As a protip, it is also good to note that the Bachmann-Landau notations refer to \textit{classes of functions}. When you read $f(n) = O(g(n))$, this is equivalent to the statement: $$f(n) \in O(g(n))$$. Specifically, $f(n)$ is in the set of functions which are asymptotically bounded above by $g(n)$.
+

@@ -87,6 +87,17 @@
 % the text-width underneath them.
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.6pt]}]
 
+% Remove annoying gap from top of framed environment.
+\makeatletter
+\renewenvironment{framed}{%
+    \def\FrameCommand##1{\hskip\@totalleftmargin
+    \fboxsep=\FrameSep\fbox{##1}
+    \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+    \MakeFramed {\advance\hsize-\width
+    \@totalleftmargin\z@ \linewidth\hsize
+    \@setminipage}}%
+    {\par\unskip\endMakeFramed}
+\makeatother
 
 % Recitation Title
 % Usage: \labtitle{[season] [yyyy]}{[lab_no]}{[days]}

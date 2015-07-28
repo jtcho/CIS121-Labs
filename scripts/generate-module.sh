@@ -77,7 +77,7 @@ then
     rm -f modules/$MODULE_NAME/*.aux
     mv $MODULE_NAME.pdf dist/
 
-    printf "\nAll finished! Check your ${MIS_COL}mdist${MSG_COL} folder for the output PDF. The output log and misc. files can be found in the ${MIS_COL}logs${MSG_COL} directory.\n"
+    printf "\nAll finished! Check your ${MIS_COL}dist${MSG_COL} folder for the output PDF. The output log and misc. files can be found in the ${MIS_COL}logs${MSG_COL} directory.\n"
 else
     echo "This module does not exist! Check your modules folder."
 fi
