@@ -65,6 +65,11 @@ then
     sed -e "s;%MODULE%;$MODULE_NAME;g" module_template > $MODULE_NAME.tex
     xelatex --shell-escape $MODULE_NAME.tex
 
+    if [[ ! -d logs/ ]]
+    then
+        mkdir logs
+    fi
+
     for ext in "${rm_extensions[@]}"; do
         if [[ -f $MODULE_NAME$ext ]]
         then

@@ -111,7 +111,7 @@
         \end{minipage}
     }}
     \begin{center}
-        \textbf{Lab #2} --- #3
+        \textbf{#2 Lab} --- #3
     \par\end{center}
 }
 
