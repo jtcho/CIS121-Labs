@@ -47,6 +47,8 @@ This probably seems very magical and hand-wavy. But we're computer scientists, s
 
 \subsection*{Understanding the S.M.T.}
 
+To understand why the S.M.T. works, let's draw out the recurrence tree for $T(n)$. \\
+
 As shown in the diagram on the next page, at the $k$th level of iteration, there are $a^k$ subdivisions of $(n/b^k)^i$ work. Therefore, at the bottom-most level there are $a^{\log_b n}$ subdivisions of $(n/b^{\log_b n})^i = 1$ work. Recall that by the properties of logarithms, $a^{\log_b n} = n^{\log_b a}$ --- so we can switch the base and the contents of the log.
 
 We can therefore write the total amount of work represented by the recurrence $T(n)$ as,
@@ -63,6 +65,4 @@ In the case where $a < b^i$, then the work done at each subsequent level decreas
 
 Tada! By drawing the recurrence tree and summing the total work performed at each level, we were able to find general expressions for the recurrence solutions for each case of the S.M.T.
 \section*{Problems}
-
-
 
