@@ -71,21 +71,27 @@ Prove or disprove the following statement:
 We want to show that $2^n \leq c(n!)\; \forall n \geq n_0$, for a positive real-valued $c$ and integer $n_0$.\\
 
 \begin{proof}
-    \begin{align*}
-        2^n &\leq c(n!)\\
-        \lg(2^n) &\leq \lg c + \lg(n!)\\
-        n &\leq \lg c + \lg(n\cdot(n-1)\cdot(n-2)\dots2)\\
-        n &\leq \lg c + \sum_{i=0}^n \lg i\\
-        n \leq \sum_{i=n/2}^n \lg i &\leq \lg c + \sum_{i=0}^n \lg i\\
-        n \leq n/2 \lg(n/2) &\leq \sum_{i=n/2}^n \lg i\\
-        2 &\leq \lg(n/2)
-    \end{align*}
 
-    It is clear that choosing any $n_0 \geq 8$ and $c > 0$ will suffice! To check our work, let $n_0 = 8$ and $c = 1$.
+Using Stirling's formula, we approximate $n!$ as $(\frac{n}{e})^n \sqrt{2\pi n}$ for large $n$. Let $n_0 = 10, c = 1$. For all $n \geq 10$, it is true that $(\frac{n}{e}) > 2$. Therefore, $2^n$ is $O(n!)$.
 
-    $$2^8 \leq 8! \rightarrow 256 < 40320$$
+\end{proof}
 
-    A particularly obvious result, but it doesn't hurt to check.
+\subsubsection*{Solution with Induction.}
+
+\begin{proof}
+
+We perform induction on $n$.
+
+\textbf{Induction Hypothesis.} We define our proposition $p(k)$ such that $p(k)\;:\;2^k \leq c\cdot k!$ for $c > 0$ and some positive integer $k$. Let $c = 1, n_0 = 4$.
+
+\textbf{Base Case.} If $k = 4$, $2^4 \leq 4!$.
+
+\textbf{Inductive Step.} We want to show that $p(k+1)$ holds.
+\begin{align*}
+    2^{k+1} &\leq (k+1)!\\
+    2\cdot2^{k}&\leq (k+1)\cdot k!
+\end{align*}
+We observe that since $k > 4$, by invoking the I.H. the right side must always exceed the left. Therefore, $p(k)$ holds for all $k \geq 4$ and $2^n = O(n!)$ with $c = 1, n_0 = 4$.
 
 \end{proof}
 
