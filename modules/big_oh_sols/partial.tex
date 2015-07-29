@@ -104,6 +104,10 @@ Provide a runtime analysis of the following loop:
             System.out.println("*");
 \end{verbatim}
 
+\subsubsection*{Solution.}
+
+For a fixed $i$, the inner loop runs $\log(\sqrt{i})$ times – as the iterand grows exponentially $(2^{\sqrt{i}})$. The outer loop runs $\lg \lg (n)$ times – as the iterand grows hyper-exponentially $(2^{2^n})$. Therefore, the total runtime is $O(\sum_{i=1}^{\lg\lg{n}} \lg(\sqrt{2^{2^i}}))$. This is $O(\sum_{i=1}^{\lg\lg n} 2^i)$, which is $O(\lg n)$.
+
 \subsection*{Problem 6}
 Prove or disprove the following statement:
 
@@ -111,3 +115,35 @@ Prove or disprove the following statement:
     $\lg(n!)$ is $\Theta(n\lg{n})$.
 \end{center}
 
+\subsubsection*{Solution.}
+By Stirling's formula, for sufficiently large $n$ we can approximate $n!$ as $(\frac{n}{e})^n \sqrt{2\pi n}$.
+
+$$\lg\bigg[(\frac{n}{e})^n \sqrt{2\pi n}\bigg] = n\lg n - n + (\frac{1}{2})\lg(2\pi n)$$
+
+, which is clearly $O(n\lg n)$.
+
+\subsubsection*{Detailed Solution}
+We first show $\lg(n!)$ is $O(n\lg n)$. Picking $c=1$ and $n_0=1$, we have
+
+$$\lg(n!) = \sum_{i=1}^n \lg i \leq n\lg n$$
+
+This is clearly true for all $n > n_0$. Therefore, we are done.\\
+
+We then show that $\lg(n!)$ is $\Omega(n\lg n)$. Our strategy is to find an easier to work with lower-bound for $\lg n!$ that is larger than some $c n\lg n$.
+
+\begin{align*}
+    \lg n! &= \lg 1 + \lg 2 + \dots + \lg n\\
+           &\geq \lg \frac{n}{2} + \lg(\frac{n}{2}+1) + \dots + \lg n&&\text{delete the first half of the terms}\\
+           &\geq \frac{n}{2}\cdot\lg\frac{n}{2}&&\text{replace remaining terms by smallest one}
+\end{align*}
+
+Choosing $c = \frac{1}{4}$ and $N = 4$, it is clear that $\frac{n}{2}\lg \frac{n}{2} \geq \frac{n}{4} \lg n$ with some algebraic manipulation:
+
+\begin{align*}
+    \frac{n}{2}\lg\frac{n}{2}&\geq\frac{n}{4}\lg n\\
+    \frac{n}{2}\lg n - \frac{n}{2}&\geq \frac{n}{4}\lg n\\
+    n \lg n &\geq 2n\\
+    \lg n &\geq 2
+\end{align*}
+
+Therefore, $\lg(n!)$ is $\Omega(n \lg n)$.
