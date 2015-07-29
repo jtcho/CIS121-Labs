@@ -45,7 +45,7 @@ then
 
     if [[ ! -f modules/$MODULE_NAME/partial.tex ]]
     then
-        printf "${ERR_COL}[WARNING]${MSG_COL} A malformed module directory was provided. Missing ${MIS_COL}mpartial.tex${RES_COL}.\n"
+        printf "${ERR_COL}[WARNING]${MSG_COL} A malformed module directory was provided. Missing ${MIS_COL}partial.tex${RES_COL}.\n"
         exit 0
     fi
 
