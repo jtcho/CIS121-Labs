@@ -14,20 +14,15 @@ if [ ! "$BASH_VERSION" ] ; then
     exit 1
 fi
 
-if ! hash xelatex 2>/dev/null; then
-    printf "${ERR_COL}[Error] ${MSG_COL}You do not appear to have XeLaTeX installed and in your path. Have you installed TeX Live?\n${RES_COL}"
-    exit 1
-fi
-
 # Nifty way of getting directory of script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-# Jump to `modules` directory for tab 
+# Jump to `modules` directory for tab
 # autocompletion.
 pushd $DIR/../modules
 
 printf "${MSG_COL}What lab module would you like to generate?\n"
-read -p "> " -e -r
+read -p "> "
 printf "\n"
 
 # Return to original directory.
@@ -40,7 +35,7 @@ REPLY="${REPLY//\/}"
 if [[ -d modules/$REPLY ]]
 then
     MODULE_NAME=$REPLY
-    
+
     rm_extensions=(.out .aux .log .pyg)
 
     if [[ ! -f modules/$MODULE_NAME/partial.tex ]]
@@ -63,7 +58,7 @@ then
     fi
     echo "Generating \`$MODULE_NAME\` as a standalone PDF."
     sed -e "s;%MODULE%;$MODULE_NAME;g" module_template > $MODULE_NAME.tex
-    xelatex --shell-escape $MODULE_NAME.tex
+    pdflatex --shell-escape $MODULE_NAME.tex
 
     if [[ ! -d logs/ ]]
     then
@@ -87,4 +82,3 @@ else
     echo "This module does not exist! Check your modules folder."
 fi
 printf "${RES_COL}"
-

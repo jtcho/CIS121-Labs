@@ -1,30 +1,29 @@
-
-% cislab.cls
-% ----------
-% Custom LaTeX class file template for all lab-related
-% material.
-% 
-% Author: JT Cho (jonathan.t.cho@gmail.com)
-% Painstakingly written by hand because web editors
-% are for chumps.
-
-% Documents must be compiled using:
-%   xelatex --shell-escape [filename].tex
-
-% Introduces various new commands for convenience:
-% See command definition for documentation.
-% \Mod
-% \ceil
-% \floor
-% \labtitle
-% \includemodule
-%
-% Introduces various new environments for convenience:
-% See environment definition for documentation.
-% `code`
-% `java`
-
-\ProvidesClass{cis121}[2015/07/07 Data Structures and Algorithms]
+%% cis121lab.cls
+%%
+%% Custom LaTeX class file template for all lab-related
+%% material.
+%%
+%% Author: JT Cho (jonathan.t.cho@gmail.com)
+%% Painstakingly written by hand because web editors
+%% are for chumps.
+%%
+%% Documents must be compiled using:
+%%   xelatex --shell-escape [filename].tex
+%%
+%% Introduces various new commands for convenience:
+%% See command definition for documentation.
+%% \Mod
+%% \ceil
+%% \floor
+%% \labtitle
+%% \includemodule
+%%
+%% Introduces various new environments for convenience:
+%% See environment definition for documentation.
+%% `code`
+%% `java`
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesClass{cis121lab}[2015/08/18 Data Structures and Algorithms]
 % Require XeLaTeX for Minted package.
 \NeedsTeXFormat{LaTeX2e}
 
@@ -59,18 +58,13 @@
 \RequirePackage[skins]{tcolorbox}
 \tcbuselibrary{minted}
 
-% Uniform font loading.
-\RequirePackage{fontspec}
 % Fancy language-specific code blocks.
-\RequirePackage{minted}         
+\RequirePackage{minted}
 % Allows use of \uline for underlining while preserving \em, \emph.
 \RequirePackage[normalem]{ulem}
 
 % Load all images from "images/".
 \graphicspath{{images/}}
-
-\setsansfont{Calibri}       % 
-\setmonofont{Consolas}      % 
 
 % Remove `End`-statements from Algorithm environment.
 \algtext*{EndWhile}
