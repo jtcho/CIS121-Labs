@@ -1,8 +1,7 @@
-
 % %MODULE%.tex
 % Auto-generated from `scripts/generate-module.sh`.
 % Temporary file. If this was orphaned, something went wrong!
-\documentclass{cislab}[12pt]
+\documentclass{cis121lab}[12pt]
 \begin{document}
 \include{modules/%MODULE%/partial}
 \end{document}
