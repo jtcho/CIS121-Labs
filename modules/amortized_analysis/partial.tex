@@ -1,0 +1,141 @@
+
+% Lab ? Handout
+
+\labtitle{\semester}{Amortized Analysis}{TBD}
+
+\section*{Learning Goals}
+During this lab, you will:
+\begin{itemize}
+    \item understand why amortized analysis may give us a more accurate picture of run-time complexity
+    \item apply the aggregate analysis method for amortized analysis
+    \item apply the potential method for amortized analysis
+\end{itemize}
+
+\section*{Amortized Analysis}
+
+By now, you should be reasonably familiar with analyzing the run-time complexity of data structures by calculating the worst case running time of each individual operation. However, if some operations \textit{can be} expensive but are \textit{almost always} cheap, this may give an inaccurate picture of the overall run-time of a series of such operations. Amortized analysis is a method to calculate the run-time complexity of a data structure's operations in such a case, by taking the average cost of an operation over an entire series of operations. Not sure what this means? The following example will make it much clearer!
+
+\section*{Example: Multi-pop Stack}
+
+Consider a stack which supports \textbf{push} and \textbf{pop} (as usual), as well as the extra special operation \textbf{multipop}, which takes one integer $n$ as an argument and \textbf{pop}s $n$ elements off the stack. 
+
+Now, let us examine the run-time of a series of $n$ operations. The run-time of \textbf{push} and \textbf{pop} are both $O(1)$, but \textbf{multipop} can take up to $O(n)$ time, since the maximum size of the stack is $n$. Thus, a naive analysis might conclude that since the worst case run-time of any operation is $O(n)$, the worst case run-time of the whole sequence is thus $O(n^2)$.
+
+However, we can obtain a better bound for the entire sequence. Note that the number of \textbf{pop} operations executed, including those called by \textbf{multipop}, is at most the number of \textbf{push} operations. Thus, we can calculate:
+
+\begin{align*}
+  \mbox{Total time taken} 
+  &= \mbox{Total time taken by \textbf{pop}s} + \mbox{Total time taken by \textbf{push}es} \\
+  &\leq 2(\mbox{Total time taken by \textbf{push}es}) \\
+  &\leq 2n \\
+  &= O(n)
+\end{align*}
+
+From this, we can see that in a sense, the \textbf{multipop} operation runs in $O(1)$ time "on average". More precisely, even though any single \textbf{multipop} can take $O(n)$ time to run, but we will always need to perform at least $n$ other operations for the data structure to reach such a state. To describe this property, we say that the \textit{amortized} running time of \textbf{multipop} is $O(1)$, even if the worst-case running time is $O(n)$.
+
+\section*{Aggregate Analysis}
+
+This method of analysis we have just done is called "aggregate analysis". Given a data structure, aggregate analysis usually works in the following way:
+\begin{enumerate}
+  \item Calculate the worst-case running time of a series of $n$ operations on the data structure.
+  \item Divide this running time by $n$, to obtain the amortized running time of a single operation.
+\end{enumerate}
+
+One important thing to note is that the running time obtained from this method is \textit{not} probabilistic! There is no "unlucky" way where we might get $O(n^2)$ running time for the above example. In the worst case, we will always take $O(n)$ time to run all the operations, but the time may not be split evenly amongst the operations, which is what threw off our initial analysis.
+
+\section*{Potential Method}
+
+Another method of doing amortized analysis is the "potential method". The idea of the potential method is that we can imagine a "bank" of time, where fast operations can be treated as slightly slower to "deposit" time into the bank, whereas slow operations can "withdraw" time to speed themselves up. Once again, it is much easier to understand with an example, so we will analyze the above example using the potential method instead.
+
+To use the potential method on our stack example, we imagine that every \textbf{push} operation does an additional unit of work, whereas a \textbf{pop} or \textbf{multipop} operation "borrows" the additional units of work from the corresponding \textbf{push} operation(s). Based on this, we can calculate the costs of each operation as follows:
+
+\begin{center}
+  \begin{tabular}{ | l || l | l | l |}
+    \hline
+    Operation & Real cost & Change in time bank & Total cost \\ 
+    \hline \hline
+    \textbf{push} & 1 & 1 & 2 \\
+    \hline
+    \textbf{pop} & 1 & -1 & 0 \\
+    \hline
+    \textbf{multipop} & n & -n & 0 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+Thus, in a sense, we can treat each \textbf{push} operation as being twice as expensive, while treating \textbf{pop} and \textbf{multipop} operations as "free"! This makes some intuitive sense, in that the running time of a series of operations is bounded by the number of \textbf{push}es.
+
+In particular, note that for this method to work, we must ensure that our "time bank" never goes negative, since that would mean operations are borrowing time that haven't been paid by earlier operations. In this case, we note that the amount stored in our time bank is exactly equal to the number of elements in the stack, which will never be negative. 
+
+Instead of choosing a change in the time bank for every operation, we could have instead gone another way around it, and chosen a nonnegative value of the time bank for every possible state of the data structure. In this case, note that if we defined a stack with $n$ elements to have $n$ units in its time bank, we would have been able to analyze it in exactly the same way. This function from the state of our data structure to the units in our time bank is called the \textit{potential function}, which gives the potential method its name. The analysis may be somewhat easier when starting with the potential function, since if we choose a nonnegative potential function we never have to worry about borrowing more time than we have.
+
+We can further formalize this method more as follows:
+
+\begin{enumerate}
+  \item Either:
+    \begin{enumerate}
+      \item Define a change in potential for every operation, making sure that for any sequence of operations, the potential is always positive. (This is sometimes referred to as the \textit{accounting method}, to contrast it with (b) listed below.)
+      \item Define a nonnegative potential function on our data structure, and then assign the change in potential using this potential function to every operation.
+    \end{enumerate}
+  \item For every operation, sum the real run-time cost and the change in potential function/time bank to obtain the amortized cost of each operation.
+\end{enumerate}
+
+While it may seem somewhat more complicated than aggregate analysis to apply, because it isn't always obvious what potential function should be used, the potential method has applications in analyzing the running time of many advanced data structures such as Fibonacci heaps or splay trees.
+
+\section*{Lab Problems}
+
+\subsection*{Problem 1}
+We have a data structure storing an undirected graph. Initially, this data structure is empty (no vertices or edges are in the graph). We wish to support the following operations:
+
+\begin{itemize}
+  \item \textbf{createVertex} creates a new vertex in the graph.
+  \item \textbf{createEdge} creates a new edge in the graph between two existing vertices.
+  \item \textbf{deleteVertex} deletes an existing vertex from the graph, as well as all edges connected to it.
+\end{itemize}
+
+Now, analyzing the run-time complexity of a series of $n$ operations, one of the TAs argues that since \textbf{deleteVertex} might delete up to $n$ edges, the worst case running time of an operation is $O(n)$, so the sequence of operations needs $O(n^2)$ time in the worst case. Use your new-found knowledge to show that you can do better!
+
+\begin{enumerate}[(a)]
+  \item Use aggregate analysis to obtain an amortized bound on the run-time of each operation.
+  \item Use the potential method to obtain an amortized bound on the run-time of each operation.
+\end{enumerate}
+
+\subsection*{Problem 2}
+We have a binary counter (i.e. an array of binary digits). Initially, the counter is set to all 0s. We wish to increment the counter through all the integers from 1 to $n$. For example, if $n=3$, we would go from $00 \rightarrow 01 \rightarrow 10 \rightarrow 11$. The cost to change the counter is equal to the number of digits we need to flip. For example, if we want to go from $01$ to $10$, we need to flip $2$ digits, so the cost of that step would be $2$.
+
+One way to analyze the total cost of this sequence of operations is to note that at each step, we can flip at most $\log n$ digits (since the largest number is $n$), so the worst-case cost of each operation is $O(\log n)$.
+
+Use amortized analysis (whichever method you prefer) to show that the total cost of all the increments is actually $O(n)$, so the amortized cost of each operation is $O(1)$.
+
+\subsection*{Problem 3}
+In Java, if you have some kind of list of elements that keeps growing and growing, you would normally use something like an ArrayList, which hides the details of having to grow an array for you. In this problem, we will take a peek at one possible way to do it.
+
+Here is a possible implementation of an ArrayList that just supports adding elements to the end:
+\begin{verbatim}
+public class ArrayList<E> {
+  private int size;
+  private Object[] arrayList;
+
+  public ArrayList() {
+    this.arrayList = new E[1];
+    this.size = 0;
+  }
+
+  public static void add(E element) {
+    if (this.size >= this.arrayList.length) {
+      E[] newList = new E[this.size * 2];
+      for (int i = 0; i < this.size; i++) {
+        newList[i] = this.arrayList[i];
+      }
+      this.arrayList = newList;
+    }
+    this.arrayList[this.size] = element;
+    this.size++;
+    return;
+  }
+}
+\end{verbatim}
+
+The main idea is that every time the list (stored as an array) is full, we create a new array double its size and copy all elements over to the new array.
+
+In a sequence of $n$ \textbf{add} operations, the worst-case running time of an \textbf{add} is $O(n)$, which happens when the copying case is hit. Use amortized analysis (whichever method you prefer) to show that this rarely happens, so that the amortized cost of an \textbf{add} operation is $O(1)$.
