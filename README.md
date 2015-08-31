@@ -1,4 +1,4 @@
-CIS121 Lab Handouts
+CIS121 Lab Handouts (MOVED TO PRIVATE GIT REPOSITORY)
 ===================
 
 Repository for storing and updating lab (recitation) materials for [CIS121: Data Structures and Algorithms With Java](https://www.seas.upenn.edu/~cis121) at the University of Pennsylvania.
